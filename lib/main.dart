@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
                 checkText();
               },
-              obscureText: true,
+              obscureText: false,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Name',
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
                 checkText();
               },
-              obscureText: true,
+              obscureText: false,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Email',
