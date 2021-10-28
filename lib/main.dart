@@ -27,6 +27,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String gender = 'Gender';
+  bool enableBtn = false;
+  String? name, email, password;
+
+  void checkText() {
+    if (name != "" && email != "" && password !="") {
+      enableBtn = true;
+    } else {
+      enableBtn = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               child: new Image.asset('assets/logo.png'),
               alignment: Alignment.center,
-              height: 50,
-              width: 50,
+              height: 100,
+              width: 100,
             ),
             Container(
                 padding: EdgeInsets.all(10),
@@ -58,6 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 )),
             Container(
                 child: TextField(
+              onChanged: (String newValue) {
+                setState(() {
+                  name = newValue;
+                });
+                checkText();
+              },
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -66,6 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
             )),
             Container(
                 child: TextField(
+              onChanged: (String newValue) {
+                setState(() {
+                  email = newValue;
+                });
+                checkText();
+              },
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -74,6 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
             )),
             Container(
                 child: TextField(
+              onChanged: (String newValue) {
+                setState(() {
+                  password = newValue;
+                });
+                checkText();
+              },
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -81,34 +110,52 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             )),
             Container(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: DropdownButton<String>(
-              value: gender,
-              icon: const Icon(Icons.expand_more),
-              iconSize: 24,
-              style: const TextStyle(
-                color: Colors.black,
-              ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  gender = newValue!;
-                });
-              },
-              items: <String>['Gender', 'Male', 'Female']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              hint:Text(
-                "Pick your gender",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500
+                    value: gender,
+                    isExpanded: true,
+                    itemHeight: 50,
+                    icon: const Icon(Icons.expand_more),
+                    iconSize: 24,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        gender = newValue!;
+                      });
+                    },
+                    items: <String>['Gender', 'Male', 'Female']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text(
+                      "Pick your gender",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    ))),
+            Container(
+              height: 50,
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: ElevatedButton(
+                onPressed: enableBtn? (){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('Awesome! Successful sign in.'),
+                    ),
+                  );
+                }: null,
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(fontSize: 18),
                 ),
-              )
-            )),
+              ),
+            ),
           ],
         ),
       ),
